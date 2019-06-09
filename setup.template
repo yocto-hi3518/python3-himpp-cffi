@@ -1,0 +1,7 @@
+from distutils.core import setup
+
+setup(name='${PACKAGE_NAME}',
+      version='${VERSION}',
+      py_modules=['${PACKAGE_NAME}'],
+      verbose=1,
+      )
