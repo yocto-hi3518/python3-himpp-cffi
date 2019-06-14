@@ -68,7 +68,8 @@ set(CFFI_PYTHON_GEN_${PACKAGE_NAME}
 endfunction(CFFIPackageFromHeader)
 
 
-set(CFFI_CFLAGS "-DCFFI=1" "-I${HIMPP_INCLUDE_PATH}")
+set(HIMPP_CFLAGS_EXTRA -Dhi3518 -DHICHIP=0x35180100 -DSENSOR_TYPE=APTINA_AR0130_DC_720P_30FPS -DHI_DEBUG -DHI_XXXX -DISP_V2)
+set(CFFI_CFLAGS "-DCFFI=1" "-I${HIMPP_INCLUDE_PATH}" ${HIMPP_CFLAGS_EXTRA})
 
 CFFIPackageFromHeader("himpp.h" "himpp" "0.1")
 
@@ -77,3 +78,35 @@ list (SORT _variableNames)
 foreach (_variableName ${_variableNames})
     message(STATUS "${_variableName}=${${_variableName}}")
 endforeach()
+
+
+
+
+set(himpp_SOURCES himpp.c)
+
+set(himpp_LIBRARIES
+    mpi 
+    upvqe 
+    dnvqe 
+    resampler 
+    aec 
+    vqev2 
+    anr 
+    VoiceEngine
+    isp 
+    _hiae 
+    _hiawb 
+    _hiaf 
+)
+
+
+add_library(himpp SHARED ${himpp_SOURCES})
+
+target_link_libraries(himpp
+                      -Wl,--whole-archive ${himpp_LIBRARIES} -Wl,--no-whole-archive -lpthread -lm -Wl,--allow-multiple-definition)
+
+target_compile_options(himpp PRIVATE ${HIMPP_CFLAGS_EXTRA})
+
+
+set_target_properties(himpp PROPERTIES VERSION "0.1" SOVERSION 0)
+install(TARGETS himpp DESTINATION ${CMAKE_INSTALL_LIBDIR})
