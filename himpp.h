@@ -32,3 +32,6 @@
 #include "mpi_ao.h"
 #include "mpi_isp.h"
 #include "hi_sns_ctrl.h"
+#include "mpi_ae.h"
+#include "mpi_awb.h"
+#include "mpi_af.h"

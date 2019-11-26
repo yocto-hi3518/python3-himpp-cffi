@@ -97,6 +97,8 @@ set(himpp_LIBRARIES
     _hiae 
     _hiawb 
     _hiaf 
+#    sns_ar0130_720p
+    sns_sc1135
 )
 
 
